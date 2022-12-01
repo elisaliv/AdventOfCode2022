@@ -1,9 +1,11 @@
 import fileinput
 
-max_calories = 0
-calories = 0
 
-with fileinput.input(files=('calories.txt')) as f:
+def day_01():
+  max_calories = 0
+  calories = 0
+
+  with fileinput.input(files=('calories.txt')) as f:
     for line in f:
       if line != '\n':
         calories += int(line)
@@ -14,4 +16,12 @@ with fileinput.input(files=('calories.txt')) as f:
         print('Max calories so far:', max_calories)
         calories = 0
 
-print('Max calories:', max_calories)
+  print('Max calories:', max_calories)
+
+
+def main():
+  day_01()
+
+
+if __name__ == "__main__":
+  main()
