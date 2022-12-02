@@ -32,8 +32,39 @@ def day_01():
   print('Total top three calories:', max_calories + second_max + third_max)
 
 
+def day_02():
+  score = 0
+  
+  with fileinput.input(files=('rps.txt')) as f:
+    for line in f:
+      opponent_move = line[0]
+      my_move = line[2]
+      if my_move == 'X':  # rock
+        score = score + 1
+        if opponent_move == 'A':  # rock
+          score = score + 3
+        # if B (paper) score += 0
+        elif opponent_move == 'C':  # scissors
+          score = score + 6
+      elif my_move == 'Y':  # paper
+        score = score + 2
+        if opponent_move == 'A':  # rock
+          score = score + 6
+        elif opponent_move == 'B':  # paper
+          score = score + 3
+        # if C (scissors) score += 0
+      elif my_move == 'Z':  # scissors
+        score = score + 3
+        # if A (rock) score += 0
+        if opponent_move == 'B':  # paper
+          score = score + 6
+        elif opponent_move == 'C':  # scissors
+          score = score + 3
+    print(score)
+
+
 def main():
-  day_01()
+  day_02()
 
 
 if __name__ == "__main__":
