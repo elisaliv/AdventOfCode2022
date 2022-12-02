@@ -34,33 +34,54 @@ def day_01():
 
 def day_02():
   score = 0
+  new_score = 0
   
   with fileinput.input(files=('rps.txt')) as f:
     for line in f:
       opponent_move = line[0]
       my_move = line[2]
-      if my_move == 'X':  # rock
+      
+      if my_move == 'X':  # rock... OR I lose
         score = score + 1
+        # new_score += 0
         if opponent_move == 'A':  # rock
           score = score + 3
-        # if B (paper) score += 0
+          new_score = new_score + 3  # I am scissors
+        elif opponent_move == 'B':  # paper
+          # score += 0
+          new_score = new_score + 1  # I am rock
         elif opponent_move == 'C':  # scissors
           score = score + 6
-      elif my_move == 'Y':  # paper
+          new_score = new_score + 2  # I am paper
+          
+      elif my_move == 'Y':  # paper... OR draw
         score = score + 2
+        new_score = new_score + 3
         if opponent_move == 'A':  # rock
           score = score + 6
+          new_score = new_score + 1  # I am rock
         elif opponent_move == 'B':  # paper
           score = score + 3
-        # if C (scissors) score += 0
-      elif my_move == 'Z':  # scissors
+          new_score = new_score + 2  # I am paper
+        elif opponent_move == 'C':  # scissors
+          # score += 0
+          new_score = new_score + 3  # I am scissors
+          
+      elif my_move == 'Z':  # scissors... OR I win
         score = score + 3
-        # if A (rock) score += 0
-        if opponent_move == 'B':  # paper
+        new_score = new_score + 6
+        if opponent_move == 'A':  # rock
+          # score += 0
+          new_score = new_score + 2  # I am paper
+        elif opponent_move == 'B':  # paper
           score = score + 6
+          new_score = new_score + 3  # I am scissors
         elif opponent_move == 'C':  # scissors
           score = score + 3
-    print(score)
+          new_score = new_score + 1  # I am rock
+
+    print('Score for part one:', score)
+    print('Score for part two:', new_score)
 
 
 def main():
