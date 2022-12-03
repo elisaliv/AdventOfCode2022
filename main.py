@@ -1,4 +1,5 @@
 import fileinput
+import string
 
 
 def day_01():
@@ -84,8 +85,31 @@ def day_02():
     print('Score for part two:', new_score)
 
 
+def day_03():
+  priorities_dict = dict(zip(
+    list(string.ascii_lowercase) + list(string.ascii_uppercase), 
+    range(1, 53)))
+  sum_priorities = 0
+  
+  with open('rucksacks.txt') as file:
+    rucksacks = file.readlines()
+    
+  for rucksack in rucksacks:
+    rucksack = rucksack.strip()
+    rucksack_size = len(rucksack)
+    compartment_size = int(rucksack_size / 2)
+    # ! I am assuming that all string lengths are even
+    first_compartment = rucksack[:compartment_size]
+    second_compartment = rucksack[compartment_size:]
+    common_item_types = set(first_compartment)\
+      .intersection(second_compartment)
+    for type in common_item_types:
+      sum_priorities += priorities_dict.get(type)
+  print('Part one:', sum_priorities)
+
+
 def main():
-  day_02()
+  day_03()
 
 
 if __name__ == "__main__":
