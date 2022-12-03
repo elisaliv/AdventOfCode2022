@@ -90,6 +90,7 @@ def day_03():
     list(string.ascii_lowercase) + list(string.ascii_uppercase), 
     range(1, 53)))
   sum_priorities = 0
+  sum_badges = 0
   
   with open('rucksacks.txt') as file:
     rucksacks = file.readlines()
@@ -106,6 +107,21 @@ def day_03():
     for type in common_item_types:
       sum_priorities += priorities_dict.get(type)
   print('Part one:', sum_priorities)
+
+  for index, rucksack in enumerate(rucksacks):
+    rucksack = rucksack.strip()
+    if index % 3 == 0:
+      first_rucksack = rucksack
+    elif index % 3 == 1:
+      second_rucksack = rucksack
+    else:
+      third_rucksack = rucksack
+      common_item_in_group = set(first_rucksack)\
+        .intersection(second_rucksack)\
+        .intersection(third_rucksack)
+      for type in common_item_in_group:
+        sum_badges += priorities_dict.get(type)
+  print('Part two:', sum_badges)
 
 
 def main():
