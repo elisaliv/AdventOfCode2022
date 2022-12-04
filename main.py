@@ -125,21 +125,28 @@ def day_03():
 
 
 def day_04():
+  completely_overlapping_pairs = 0
   overlapping_pairs = 0
   with open('pairs.txt') as file:
     lines = file.readlines()
 
   for line in lines:
     pairs = line.split(',')
-    first_elf = list(map(int, pairs[0].split('-')))
-    second_elf = list(map(int, pairs[1].split('-')))
-    print(first_elf, second_elf)
-    if (first_elf[0] <= second_elf[0] 
-        and first_elf[1] >= second_elf[1]) \
-      or (second_elf[0] <= first_elf[0] 
-          and second_elf[1] >= first_elf[1]):
+    first_elf_range = list(map(int, pairs[0].split('-')))
+    second_elf_range = list(map(int, pairs[1].split('-')))
+    if (first_elf_range[0] <= second_elf_range[0] 
+        and first_elf_range[1] >= second_elf_range[1]) \
+      or (second_elf_range[0] <= first_elf_range[0] 
+          and second_elf_range[1] >= first_elf_range[1]):
+      completely_overlapping_pairs += 1
+            
+    first_elf_sections = set(range(first_elf_range[0], first_elf_range[1] + 1))
+    second_elf_sections = set(range(second_elf_range[0], second_elf_range[1] + 1))
+    if (len(first_elf_sections.intersection(second_elf_sections)) != 0):
       overlapping_pairs += 1
-  print('Part one:', overlapping_pairs)
+
+  print('Part one:', completely_overlapping_pairs)
+  print('Part two:', overlapping_pairs)
 
 
 def main():
