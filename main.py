@@ -124,8 +124,26 @@ def day_03():
   print('Part two:', sum_badges)
 
 
+def day_04():
+  overlapping_pairs = 0
+  with open('pairs.txt') as file:
+    lines = file.readlines()
+
+  for line in lines:
+    pairs = line.split(',')
+    first_elf = list(map(int, pairs[0].split('-')))
+    second_elf = list(map(int, pairs[1].split('-')))
+    print(first_elf, second_elf)
+    if (first_elf[0] <= second_elf[0] 
+        and first_elf[1] >= second_elf[1]) \
+      or (second_elf[0] <= first_elf[0] 
+          and second_elf[1] >= first_elf[1]):
+      overlapping_pairs += 1
+  print('Part one:', overlapping_pairs)
+
+
 def main():
-  day_03()
+  day_04()
 
 
 if __name__ == "__main__":
