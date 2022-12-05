@@ -1,5 +1,6 @@
 import fileinput
 import string
+import re
 
 
 def day_01():
@@ -149,8 +150,29 @@ def day_04():
   print('Part two:', overlapping_pairs)
 
 
+def day_05():
+  with open('crates.txt') as file:
+    all_file = file.readlines()
+  all_file = [line[:-1] for line in all_file]
+
+  blank_index = all_file.index('')
+  crates_raw = [line.split(',') for line in all_file[:blank_index]]
+  crates_raw = [[line.strip() for line in crate] for crate in crates_raw]
+  crates = dict(zip(range(1, len(crates_raw) + 1), crates_raw))
+  moves_raw = all_file[blank_index + 1:]
+  moves = [dict(zip(['move', 'from', 'to'], re.findall(r'\d+', line))) for line in moves_raw]
+  moves = [dict([a, int(x)] for a, x in b.items()) for b in moves]
+
+  for move in moves:
+    for crate in range(move['move']):
+      to_be_moved = crates[move['from']].pop()
+      crates[move['to']].append(to_be_moved)
+
+  print('Part one:', [item[-1] for item in crates.values()])
+    
+
 def main():
-  day_04()
+  day_05()
 
 
 if __name__ == "__main__":
