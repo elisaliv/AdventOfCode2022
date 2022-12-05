@@ -1,6 +1,7 @@
 import fileinput
 import string
 import re
+import copy
 
 
 def day_01():
@@ -163,12 +164,20 @@ def day_05():
   moves = [dict(zip(['move', 'from', 'to'], re.findall(r'\d+', line))) for line in moves_raw]
   moves = [dict([a, int(x)] for a, x in b.items()) for b in moves]
 
+  crates_part_two = copy.deepcopy(crates)
+
   for move in moves:
-    for crate in range(move['move']):
+    for _ in range(move['move']):
       to_be_moved = crates[move['from']].pop()
       crates[move['to']].append(to_be_moved)
 
+    to_be_moved_part_two = crates_part_two[move['from']][-move['move']:]
+    for _ in range(move['move']):
+      crates_part_two[move['from']].pop()
+    crates_part_two[move['to']].extend(to_be_moved_part_two)
+
   print('Part one:', [item[-1] for item in crates.values()])
+  print('Part two:', [item[-1] for item in crates_part_two.values()])
     
 
 def main():
