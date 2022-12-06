@@ -185,14 +185,17 @@ def day_06():
   with open('datastream.txt') as file:
     datastream = file.readlines()
   datastream = datastream[0].strip()
-  four_chars = ['', '', '', '']
+  
+  marker_length = 14  # 4 for part one
+  marker = [''] * marker_length
   
   for index, char in enumerate(datastream):
-    four_chars.pop(0)
-    four_chars.append(char)
-    if len(set(four_chars)) == 4 and '' not in four_chars:
+    marker.pop(0)
+    marker.append(char)
+    if len(set(marker)) == marker_length and '' not in marker:
       break
-  print('Part one:', index + 1, four_chars)
+  
+  print('Part two:', index + 1, marker)
 
 def main():
   day_06()
