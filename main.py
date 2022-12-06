@@ -180,8 +180,22 @@ def day_05():
   print('Part two:', [item[-1] for item in crates_part_two.values()])
     
 
+def day_06():
+  # datastream = 'zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw'
+  with open('datastream.txt') as file:
+    datastream = file.readlines()
+  datastream = datastream[0].strip()
+  four_chars = ['', '', '', '']
+  
+  for index, char in enumerate(datastream):
+    four_chars.pop(0)
+    four_chars.append(char)
+    if len(set(four_chars)) == 4 and '' not in four_chars:
+      break
+  print('Part one:', index + 1, four_chars)
+
 def main():
-  day_05()
+  day_06()
 
 
 if __name__ == "__main__":
