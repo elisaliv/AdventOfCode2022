@@ -197,8 +197,35 @@ def day_06():
   
   print('Part two:', index + 1, marker)
 
+
+def day_07():
+  with open('exploring_filesystem.txt') as file:
+    lines = file.readlines()
+  lines = [line.strip() for line in lines]
+
+  current_directory = None
+  upper_level = None
+  path = []
+  dir_sizes = dict()
+
+  for line in lines:
+    if line.startswith('$ cd'):
+      current_directory = line.split(' ')[2]
+      if current_directory == '..':
+        path.pop()
+      else:
+        path.append(current_directory)
+      if '/'.join(path) not in dir_sizes:
+        dir_sizes['/'.join(path)] = 0
+    elif line[0].isdigit():
+      for i in range(len(path)):
+          dir_sizes['/'.join(path[:i+1])] += int(line.split(' ')[0])
+  # print(dir_sizes)
+  print('Part one:', sum([size for size in dir_sizes.values() if size <= 100000]))
+
+
 def main():
-  day_06()
+  day_07()
 
 
 if __name__ == "__main__":
