@@ -220,8 +220,18 @@ def day_07():
     elif line[0].isdigit():
       for i in range(len(path)):
           dir_sizes['/'.join(path[:i+1])] += int(line.split(' ')[0])
-  # print(dir_sizes)
   print('Part one:', sum([size for size in dir_sizes.values() if size <= 100000]))
+
+  total_disk_space = 70_000_000
+  total_needed_disk_space = 30_000_000
+  currently_free_space = total_disk_space - dir_sizes['/']
+  must_free = total_needed_disk_space - currently_free_space
+  size_of_chosen_dir = total_disk_space
+
+  for dir, size in dir_sizes.items():
+    if size >= must_free and size < size_of_chosen_dir:
+      size_of_chosen_dir = size
+  print('Part two:', size_of_chosen_dir)
 
 
 def main():
