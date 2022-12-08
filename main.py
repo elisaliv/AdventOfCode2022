@@ -234,8 +234,29 @@ def day_07():
   print('Part two:', size_of_chosen_dir)
 
 
+def day_08():
+  with open('trees.txt') as f:
+    trees = [[int(num) for num in line.strip()] for line in f]
+
+  all_trees = len(trees) * len(trees[0])
+  print(all_trees)
+  non_visible_trees = 0
+
+  for i in range(1, len(trees) - 1):
+    for j in range(1, len(trees[0]) - 1):
+      visible_from_north = any(trees[i][j] <= tree for tree in [row[j] for row in trees[:i]])
+      visible_from_south = any(trees[i][j] <= tree for tree in [row[j] for row in trees[i+1:]])
+      visible_from_east = any(trees[i][j] <= tree for tree in trees[i][:j])
+      visible_from_west = any(trees[i][j] <= tree for tree in trees[i][j+1:])
+      if visible_from_north and visible_from_south and \
+        visible_from_east and visible_from_west:
+          non_visible_trees += 1
+
+  visible_trees = all_trees - non_visible_trees
+  print('Part one:', visible_trees)
+
 def main():
-  day_07()
+  day_08()
 
 
 if __name__ == "__main__":
