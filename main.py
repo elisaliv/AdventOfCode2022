@@ -239,7 +239,6 @@ def day_08():
     trees = [[int(num) for num in line.strip()] for line in f]
 
   all_trees = len(trees) * len(trees[0])
-  print(all_trees)
   non_visible_trees = 0
 
   for i in range(1, len(trees) - 1):
@@ -254,6 +253,30 @@ def day_08():
 
   visible_trees = all_trees - non_visible_trees
   print('Part one:', visible_trees)
+
+  max_scenic_score = 0
+
+  for i in range(1, len(trees) - 1):
+    for j in range(1, len(trees[0]) - 1):
+      north = [row[j] for row in trees[:i]]
+      north = north[::-1]
+      south = [row[j] for row in trees[i+1:]]
+      east = trees[i][:j]
+      east = east[::-1]
+      west = trees[i][j+1:]
+      scenic_score = 1
+      for direction in north, south, east, west:
+        viewing_distance = 0
+        for tree in direction:
+          if tree >= trees[i][j]:
+            viewing_distance += 1
+            break
+          else:
+            viewing_distance += 1
+        scenic_score *= viewing_distance
+      if scenic_score > max_scenic_score:
+        max_scenic_score = scenic_score
+  print('Part two:', max_scenic_score)
 
 def main():
   day_08()
