@@ -295,28 +295,61 @@ def day_09():
     if direction == 'R':
       for step in range(steps):
         head[0] += 1
-        move_tail_after_head(tail, head, direction)
+        move_tail_after_head(tail, head)
         all_tail_positions.append(tail.copy())
     elif direction == 'L':
       for step in range(steps):
         head[0] += -1
-        move_tail_after_head(tail, head, direction)
+        move_tail_after_head(tail, head)
         all_tail_positions.append(tail.copy())
     elif direction == 'U':
       for step in range(steps):
         head[1] += 1
-        move_tail_after_head(tail, head, direction)
+        move_tail_after_head(tail, head)
         all_tail_positions.append(tail.copy())
     elif direction == 'D':
       for step in range(steps):
         head[1] += -1
-        move_tail_after_head(tail, head, direction)
+        move_tail_after_head(tail, head)
         all_tail_positions.append(tail.copy())
 
   print('Part one:', len(set(tuple(position) for position in all_tail_positions)))
+  
+  rope =  [starting_point.copy() for _ in range(10)]
+  all_tail_positions_part_two = [rope[9].copy()]
+  
+  for motion in motions:
+    direction, steps = motion.split(' ')
+    steps = int(steps)
+    if direction == 'R':
+      for step in range(steps):
+        rope[0][0] += 1
+        for i in range(1, len(rope)):
+          move_tail_after_head(rope[i], rope[i-1])
+        all_tail_positions_part_two.append(rope[9].copy())
+    elif direction == 'L':
+      for step in range(steps):
+        rope[0][0] += -1
+        for i in range(1, len(rope)):
+          move_tail_after_head(rope[i], rope[i-1])
+        all_tail_positions_part_two.append(rope[9].copy())
+    elif direction == 'U':
+      for step in range(steps):
+        rope[0][1] += 1
+        for i in range(1, len(rope)):
+          move_tail_after_head(rope[i], rope[i-1])
+        all_tail_positions_part_two.append(rope[9].copy())
+    elif direction == 'D':
+      for step in range(steps):
+        rope[0][1] += -1
+        for i in range(1, len(rope)):
+          move_tail_after_head(rope[i], rope[i-1])
+        all_tail_positions_part_two.append(rope[9].copy())
+
+  print('Part two:', len(set(tuple(position) for position in all_tail_positions_part_two)))
 
 
-def move_tail_after_head(tail, head, direction):
+def move_tail_after_head(tail, head):
   move = [x - y for x, y in zip(head, tail)]
   if abs(move[0]) <= 1 and abs(move[1]) <= 1:
       return
