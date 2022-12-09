@@ -278,8 +278,61 @@ def day_08():
         max_scenic_score = scenic_score
   print('Part two:', max_scenic_score)
 
+
+def day_09():
+  with open('motion_series.txt') as f:
+    motions = f.readlines()
+  motions = [line.strip() for line in motions]
+
+  starting_point = [0, 0]  # x, y
+  head = starting_point.copy()
+  tail = starting_point.copy()
+  all_tail_positions = [tail.copy()]
+
+  for motion in motions:
+    direction, steps = motion.split(' ')
+    steps = int(steps)
+    if direction == 'R':
+      for step in range(steps):
+        head[0] += 1
+        move_tail_after_head(tail, head, direction)
+        all_tail_positions.append(tail.copy())
+    elif direction == 'L':
+      for step in range(steps):
+        head[0] += -1
+        move_tail_after_head(tail, head, direction)
+        all_tail_positions.append(tail.copy())
+    elif direction == 'U':
+      for step in range(steps):
+        head[1] += 1
+        move_tail_after_head(tail, head, direction)
+        all_tail_positions.append(tail.copy())
+    elif direction == 'D':
+      for step in range(steps):
+        head[1] += -1
+        move_tail_after_head(tail, head, direction)
+        all_tail_positions.append(tail.copy())
+
+  print('Part one:', len(set(tuple(position) for position in all_tail_positions)))
+
+
+def move_tail_after_head(tail, head, direction):
+  move = [x - y for x, y in zip(head, tail)]
+  if abs(move[0]) <= 1 and abs(move[1]) <= 1:
+      return
+  elif abs(move[0]) == 2 and abs(move[1]) == 2:
+      tail[0] += int(move[0] / 2)
+      tail[1] += int(move[1] / 2)
+  elif abs(move[0]) == 2:
+      tail[0] += int(move[0] / 2)
+      tail[1] = head[1]
+  elif abs(move[1]) == 2:
+      tail[1] += int(move[1] / 2)
+      tail[0] = head[0]
+
+
 def main():
-  day_08()
+  day_09()
 
 
 if __name__ == "__main__":
