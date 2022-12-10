@@ -380,14 +380,50 @@ def day_10():
     if cycle in cycles_to_be_analyzed:
       signal_strength += cycle * x
     # print('Cycle:', cycle, 'X:', x)
+
     if line.startswith('addx'):
       cycle += 1
       if cycle in cycles_to_be_analyzed:
         signal_strength += cycle * x
       # print('Cycle:', cycle, 'X:', x)
+
       x += int(line.split(' ')[1])
 
   print('Part one:', signal_strength)
+  
+  cycle = 0
+  x = 1
+  sprite = [x - 1, x, x + 1]
+  crt_drawing = []
+  end_of_screen = [40, 80, 120, 160, 200, 240]
+  cycle_offset = 0
+
+  for line in lines:
+    crt = cycle - cycle_offset
+    if crt in sprite:
+      crt_drawing.append('#')
+    else:
+      crt_drawing.append('.')
+    cycle += 1
+    if cycle in end_of_screen:
+      cycle_offset = cycle
+      crt_drawing.append('\n')
+
+    if line.startswith('addx'):
+      crt = cycle - cycle_offset
+      if crt in sprite:
+        crt_drawing.append('#')
+      else:
+        crt_drawing.append('.')
+      cycle += 1
+      if cycle in end_of_screen:
+        cycle_offset = cycle
+        crt_drawing.append('\n')
+
+      x += int(line.split(' ')[1])
+      sprite = [x - 1, x, x + 1]
+
+  print(''.join(crt_drawing))
 
 
 def main():
