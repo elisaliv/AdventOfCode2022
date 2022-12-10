@@ -364,8 +364,34 @@ def move_tail_after_head(tail, head):
       tail[0] = head[0]
 
 
+def day_10():
+  with open('program.txt') as file:
+    lines = file.readlines()
+  lines = [line.strip() for line in lines]
+
+  cycle = 0
+  x = 1
+  cycles_to_be_analyzed = [20, 60, 100, 140, 180, 220]
+  signal_strength = 0
+  
+  for line in lines:
+    # print(line)
+    cycle += 1
+    if cycle in cycles_to_be_analyzed:
+      signal_strength += cycle * x
+    # print('Cycle:', cycle, 'X:', x)
+    if line.startswith('addx'):
+      cycle += 1
+      if cycle in cycles_to_be_analyzed:
+        signal_strength += cycle * x
+      # print('Cycle:', cycle, 'X:', x)
+      x += int(line.split(' ')[1])
+
+  print('Part one:', signal_strength)
+
+
 def main():
-  day_09()
+  day_10()
 
 
 if __name__ == "__main__":
